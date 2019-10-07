@@ -1,0 +1,170 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  /*rgba(175, 171, 171, 0.842); */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.jumbotron {
+	padding-top: 20px;
+	height: 130px;
+	margin: 0px;
+	text-align: center;
+	background-color: white;
+}
+
+#page_wrap{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#ui-flex {
+	display: inline-flex;
+	flex-direction: row;
+	width: 100%;
+}
+#obj-display {
+	display: flex;
+  	width: 232px;
+  	background: #ddd;
+  	margin-right: auto;
+  	flex-direction: column;
+  	overflow-y: scroll;
+  	height: 500px;
+}
+
+#ui-controls {
+	display: inline-flex;
+    align-items: stretch;
+    flex-direction: column;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#ui-controls-top div {
+	margin-top: 5px;
+}
+
+#ui-controls button {
+	width: 200px;
+	background: transparent;
+	color: black;
+	border-color: black;
+}
+
+#ui-controls button:hover {      
+ 	background-color: #008CBA;      
+ 	color: white; 
+}
+
+#ui-controls-tutorial button {
+	background-color: #28a745;
+}
+
+#ui-controls-tutorial button:hover {      
+ 	background-color: #28a745;     
+ 	color: white; 
+}
+
+.btn-group {
+	display: inline-flex;
+	margin: 1rem;
+}
+.btn-group-vertical {
+	display: inline-flex;
+	flex-direction: column;
+	margin: 1rem;
+}
+
+#canvas-container {
+	display: inline-flex;
+	flex-direction: row;
+	align-content: center;
+	flex-wrap: nowrap;
+	align-items: center;
+	margin: auto;
+}
+
+#canvas-container button {
+	background-color: black;
+	color: white;
+}
+
+.spinner-grow {
+	width: 3rem;
+	height: 3rem;
+}
+
+#btn-pan {
+}
+
+.btn {
+}
+
+#editbox button {
+
+}
+
+#editbuttons {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.footer {
+	text-align: center;
+    background-color: #f5f5f5;
+}
+
+#image-container {
+	display: inline-flex;
+	flex-direction: row;
+	width: 100%;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+#grammar-container {
+	display: inline-flex;
+	width: 100%;
+	padding: 15px;
+}
+
+.inner-grammar {
+	margin: auto;
+}
+
+.image {
+	margin: auto;
+	border: 3px solid white;
+}
+
+.selectList{
+	width:200px;
+	background-color: blue;
+	margin: auto;
+}
+.select{
+	background-color: blue;
+}
+
+.selected-class{
+	border: 3px solid red;
+}
+
+#recognition-yes, #recognition-no{
+	margin: 5px;
+}
