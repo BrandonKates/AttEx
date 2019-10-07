@@ -11,8 +11,6 @@ class Canvas extends Component {
     }
     componentDidMount() {
         this.canvas = this.refs.canvas;
-        //this.canvas.height = 500;
-        //this.canvas.width = 300;
         console.log(this.props)
         this.newImageHeight = 0;
         this.ctx = this.canvas.getContext("2d");

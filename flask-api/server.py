@@ -10,6 +10,7 @@ from flask import send_file
 from PIL import Image
 
 #from app.settings import *
+from grammar import parseGrammar
 
 
 data = []
@@ -38,13 +39,28 @@ test_get_choose = {
 }
 
 test_get_grammar = {
-	
+	'grammar': parseGrammar(grammar),
 }
 
 test_get_click = {
 	'images': images[1],
 	'attribute' : 'snout',
 }
+
+grammar = '''S -> is this C ? Y | how is C different from C ? C specializes C because A | how is C different from C ? C is like C except that A | if not C what is it ? C | i don't know what P is ? P is located at L in I | i don't know what R is ? R is M in I than I | i don't know what B is ? B is H in I .
+C -> deer | bear | dog | cat | panda .
+A -> Q and A | Q .
+Q -> it is M R | it is B | it has N O | its P is M R | its P is B .
+M -> more | less .
+R -> small | furry | long | thin | chubby .
+B -> black | brown | red | white .
+N -> no | .
+O -> Ps | P .
+P -> eye | leg | horn | snout | eye-spot .
+Y -> yes | no .
+L -> (0, 0) .
+I -> imagejpeg | image2jpeg .
+H -> present | absent .\n'''
 
 class RecognitionTask(Resource):
 	def get(self):
@@ -125,164 +141,6 @@ api.add_resource(RecognitionTask, 	'/recognitionTask')
 api.add_resource(GrammarTask, 	  	'/grammarTask')
 api.add_resource(ClickTask, 		'/clickTask')
 api.add_resource(ChooseTask, 		'/chooseTask')
-
-
-
-
-
-'''
-
-
-@app.route('/images/<int:id>/', methods=['GET'])
-def getImage(id):
-	static_dir = "static"+os.sep+"images"+os.sep
-	filename = static_dir + str(id) + ".jpg"
-	return send_file(filename)
-
-
-@app.route('/grabcut/', methods=['POST'])
-def getCut():
-	post = json.loads(request.data)
-	imurl = static_dir + rect['imurl']
-	img = np.array(Image.open(imurl))
-	startX = rect['startX']
-	startY = rect['startY']
-	w = rect['w']
-	h = rect['h']
-	print('ready to process')
-	rect = startX, startY, w, h
-	data = initGrabCut(img, rect)
-	print('finished processing')
-
-	res = {
-		'Success': True,
-		'value': data  # .tolist()
-	}
-	return json.dumps(res), 200
-
-
-@app.route('/dextr/', methods=['POST'])
-def getDex():
-	# data = {imurl: '', extremePoints}
-	print(request.data)
-	post = json.loads(request.data)
-	imurl = static_dir + post['imurl']
-	img = np.array(Image.open(imurl))
-	extPts = post['extremePts'];
-	data = initDextr(img, extPts, model=dextr_net, gpu_id = gpu_id, pad=pad, thresh=thresh)
-
-	res = {
-		'Success': True,
-		'value': data
-	}
-	print(res)
-	return json.dumps(res), 200
-
-
-@app.route('/brush/', methods=['POST'])
-def getPath():
-	# method, points to remove, points to add, polygon if necessary, foreground + background
-	# data = {imurl: '', method: '', poly: {}, rect: {}, fgPts: [], bgPts: [], extremePts: {}}
-	post = json.loads(request.data)
-	print("JSON_DATA: ", post)
-
-	fgPts = post['fgPts']
-	bgPts = post['bgPts']
-
-	method = post['method']
-
-	polygons = post['polygon']
-	imurl = static_dir + post['imurl']
-	img = np.array(Image.open(imurl))
-
-	if method == "grabcut":
-		rect = post['rect']
-		startX = rect['startX']
-		startY = rect['startY']
-		w = rect['w']
-		h = rect['h']
-		rect = startX, startY, w, h
-		data = updateGrabCut(
-			img, polygons, fgPts, bgPts, rect)
-
-	elif method == "dextr":
-		extPts = np.int_(post['extremePts']);
-		data = updateDextr(
-			img, polygons, fgPts, bgPts, extPts)
-
-	elif method in ["hand", "handupdate", "handremove"]:
-		data = updatePolygons(
-			img, polygons, fgPts, bgPts)
-	res = {
-		'Success': True,
-		'value': data
-	}
-	print("BRUSH RES: ", res)
-	return json.dumps(res), 200
-
-
-@app.route('/hand/', methods=['POST'])
-def getHand():
-	# data = {imurl: '', poly: {}}
-	post = json.loads(request.data)
-	print(post)
-	#imurl = static_dir + post['imurl']
-	#img = np.array(Image.open(imurl))
-	polys = post['polygon']
-	data = getPolygons(polys)
-	res = {
-		'Success': True,
-		'value': data
-	}
-	return json.dumps(res), 200
-
-@app.route('/handupdate/', methods=['POST'])
-def getHandUpdate():
-	#data = {imurl: {}, poly: {}, oldPoly: {}}
-	post = json.loads(request.data)
-	print(post)
-	imurl = static_dir + post['imurl']
-	img = np.array(Image.open(imurl))
-	newPolys = post['polygon']
-	oldPolys = post['oldPoly']
-
-	data = mergePolygons(img, oldPolys, newPolys)
-	res = {
-		'Success': True,
-		'value': data
-	}
-	return json.dumps(res), 200
-
-@app.route('/handremove/', methods=['POST'])
-def getHandRemove():
-	#data = {imurl: {}, poly: {}, oldPoly: {}}
-	post = json.loads(request.data)
-	imurl = static_dir + post['imurl']
-	img = np.array(Image.open(imurl))
-	polysToRemove = post['polygon']
-	polys = post['oldPoly']
-	data = removePolygons(img, polys, polysToRemove)
-	res = {
-		'Success': True,
-		'value': data
-	}
-	return json.dumps(res), 200
-
-@app.route('/submit/', methods=['POST'])
-def getSubmit():
-	post = json.loads(request.form['ans'])
-	print(post)
-
-	# updateResult(post, imageSize, canvasSize) # Updates in place, no need to assign to variable
-
-	with open("result.json", "w") as jfile:
-		jfile.write(json.dumps(post))
-
-	return render_template('feedback.html')
-
-'''
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
