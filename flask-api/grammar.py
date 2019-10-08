@@ -1,5 +1,8 @@
+import json
+
 from lark import Lark, Transformer, v_args
 from lark.lexer import Token
+
 
 parser = Lark(r"""
         start: _NL? production+
@@ -103,7 +106,27 @@ def custom_rules(rules):
 
 
 def getGrammarJSON(grammar):
-	return convertGrammarTokensToJSON(grammar)
+	grammarString = parseGrammarToString(grammar)
+	return json.dumps(grammarString)
 
-def convertGrammarTokensToJSON(grammar):
-	return None
+if __name__ == "__main__":
+	grammar = '''S -> is this C ? Y | how is C different from C ? C specializes C because A | how is C different from C ? C is like C except that A | if not C what is it ? C | i don't know what P is ? P is located at L in I | i don't know what R is ? R is M in I than I | i don't know what B is ? B is H in I .
+		C -> deer | bear | dog | cat | panda .
+		A -> Q and A | Q .
+		Q -> it is M R | it is B | it has N O | its P is M R | its P is B .
+		M -> more | less .
+		R -> small | furry | long | thin | chubby .
+		B -> black | brown | red | white .
+		N -> no | .
+		O -> Ps | P .
+		P -> eye | leg | horn | snout | eye-spot .
+		Y -> yes | no .
+		L -> (0, 0) .
+		I -> imagejpeg | image2jpeg .
+		H -> present | absent .
+	'''
+
+	print(getGrammarJSON(grammar))
+
+
+# REGEX: [\w|.!?'-]{2,}|\.|\?|[a-z]{1}|\([0-9], [0-9]\)

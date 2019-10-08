@@ -10,7 +10,7 @@ from flask import send_file
 from PIL import Image
 
 #from app.settings import *
-from grammar import parseGrammar
+from grammar import getGrammarJSON
 
 
 data = []
@@ -27,26 +27,6 @@ images = [{
     'image': 'data:image/jpeg;base64,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'
   }]
 
-test_recognition = {
-	'images' : images[0],
-  	'classLabel' : 'dog',
-}
-
-test_get_choose = {
-	'images': images,
-	'adverb': 'more',
-	'adjective': 'chubby',
-}
-
-test_get_grammar = {
-	'grammar': parseGrammar(grammar),
-}
-
-test_get_click = {
-	'images': images[1],
-	'attribute' : 'snout',
-}
-
 grammar = '''S -> is this C ? Y | how is C different from C ? C specializes C because A | how is C different from C ? C is like C except that A | if not C what is it ? C | i don't know what P is ? P is located at L in I | i don't know what R is ? R is M in I than I | i don't know what B is ? B is H in I .
 C -> deer | bear | dog | cat | panda .
 A -> Q and A | Q .
@@ -62,19 +42,34 @@ L -> (0, 0) .
 I -> imagejpeg | image2jpeg .
 H -> present | absent .\n'''
 
+test_recognition = {
+	'images' : images[0],
+  	'classLabel' : 'dog',
+}
+
+test_get_choose = {
+	'images': images,
+	'adverb': 'more',
+	'adjective': 'chubby',
+}
+
+test_get_grammar = {
+	'images': images,
+	'grammar': getGrammarJSON(grammar),
+}
+
+test_get_click = {
+	'images': images[1],
+	'attribute' : 'snout',
+}
+
+
 class RecognitionTask(Resource):
 	def get(self):
 		# get Image and Class to Display for that image
 		return test_recognition
 
 	def post(self):
-		# receive the image, objectClass, and answer 
-		# {	'data': 
-		# 	images: {'image': 'string'},
-		#	objectClass: 'string',
-		# 	choice: 'boolean',
-		#	}
-		#
 		data = json.loads(request.data)
 		image = data['images']
 		classLabel = data['classLabel']

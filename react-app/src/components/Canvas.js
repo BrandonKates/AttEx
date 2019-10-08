@@ -11,7 +11,7 @@ class Canvas extends Component {
     }
     componentDidMount() {
         this.canvas = this.refs.canvas;
-        console.log(this.props)
+        //console.log(this.props)
         this.newImageHeight = 0;
         this.ctx = this.canvas.getContext("2d");
 
@@ -23,7 +23,7 @@ class Canvas extends Component {
 
             this.ctx.drawImage(this.img, 0, 0);
         }
-        console.log(this.canvas)
+        //console.log(this.canvas)
         this.showImage()
     }    
     componentDidUpdate(nextProps) {
@@ -68,7 +68,7 @@ class Canvas extends Component {
 
     _mouseMove(e){
         var pos = this.getMousePos(e);
-        console.log(pos, this.state.point)
+        //console.log(pos, this.state.point)
     }
 
     drawCircle(pos) {

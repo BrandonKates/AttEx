@@ -141,6 +141,8 @@ code {
 	display: inline-flex;
 	width: 100%;
 	padding: 15px;
+	padding-left: 20%;
+	padding-right: 20%;
 }
 
 .inner-grammar {
@@ -167,4 +169,10 @@ code {
 
 #recognition-yes, #recognition-no{
 	margin: 5px;
+}
+
+#twoCanvas{
+    display: inline-flex;
+    padding-left: 200px;
+    padding-right: 200px;
 }
