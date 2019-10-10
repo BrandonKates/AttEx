@@ -127,6 +127,7 @@ if __name__ == "__main__":
 	'''
 
 	print(getGrammarJSON(grammar))
+	print(parseGrammarToTokens(grammar))
 
 
 # REGEX: [\w|.!?'-]{2,}|\.|\?|[a-z]{1}|\([0-9], [0-9]\)

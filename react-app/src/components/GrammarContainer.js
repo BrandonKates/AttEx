@@ -60,3 +60,5 @@ export default class GrammarContainer extends React.Component {
 
 // Select List for a dropdown with choices
 // Regular Field Populator
+
+// For a VARIABLE: we want to link other dropdowns with the same variable
