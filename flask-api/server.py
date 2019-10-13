@@ -3,7 +3,8 @@ import json
 import numpy as np
 
 from flask import Flask, request
-from flask_restful import Resource, Api
+#from flask_restful import Resource, Api
+from flask_pymongo import PyMongo
 
 from flask_cors import CORS
 from flask import send_file
@@ -15,8 +16,12 @@ from grammar import getGrammarJSON
 
 data = []
 app = Flask(__name__)
+
+app.config["MONGO_URI"] = "mongodb://localhost:27017/attexDB"
+mongo = PyMongo(app)
+
 CORS(app)
-api = Api(app)
+#api = Api(app)
 
 static_dir = "app/static/images/"
 
@@ -64,7 +69,81 @@ test_get_click = {
 }
 
 
-class RecognitionTask(Resource):
+@app.route("/recognitionTask", methods=["GET"])
+def recognitionGet():
+	# get Image and Class to Display for that image
+	return test_recognition
+
+@app.route("/recognitionTask", methods=["POST"])
+def recognitionPost():
+	data = json.loads(request.data)
+	image = data['images']
+	classLabel = data['classLabel']
+	choice = data['choice']
+	post = {'image': image, 'classLabel': classLabel, 'choice': choice}
+	print(post)
+
+	with open("recognitionResult.json", "w") as out:
+		out.write(json.dumps(post))
+	return post, 200
+
+@app.route("/grammarTask", methods=["GET"])
+def grammarGet():
+	return test_get_grammar;
+
+@app.route("/grammarTask", methods=["POST"])
+def grammarPost():
+	return None;
+
+@app.route("/clickTask", methods=["GET"])
+def clickGet():
+	return test_get_click;
+
+@app.route("/clickTask", methods=["POST"])
+def clickPost():
+	data = json.loads(request.data)
+	images = data['images']
+	attribute = data['attribute']
+	choice = data['choice']
+	point = data['point']
+	post = {
+		'image' : images,
+		'attribute': attribute,
+		'choice': choice,
+		'point': point,
+	}
+	print(post)
+
+	with open('clickTaskResult.json', 'w') as out:
+		out.write(json.dumps(post))
+	return post, 200
+
+@app.route("/chooseTask", methods=["GET"])
+def chooseGet():
+	return test_get_choose
+
+@app.route("/chooseTask", methods=["POST"])
+def choosePost():
+	data = json.loads(request.data)
+	images = data['images']
+	adverb = data['adverb']
+	adjective = data['adjective']
+	choice = data['choice'] # which image did they choose (image0 or image1)
+	post = {
+		'images': images,
+		'adverb': adverb,
+		'adjective': adjective,
+		'choice': choice,
+	}
+	print(post)
+	with open("chooseTaskResult.json", "w") as out:
+		out.write(json.dumps(post))
+	return post, 200
+
+
+
+'''
+class RecognitionTask():
 	def get(self):
 		# get Image and Class to Display for that image
 		return test_recognition
@@ -80,15 +159,13 @@ class RecognitionTask(Resource):
 		with open("recognitionResult.json", "w") as out:
 			out.write(json.dumps(post))
 		return post, 200
-
-class GrammarTask(Resource):
+class GrammarTask():
 	def get(self):
 		return test_get_grammar
 
 	def post(self):
 		return None
-
-class ClickTask(Resource):
+class ClickTask():
 	def get(self):
 		return test_get_click
 
@@ -109,8 +186,7 @@ class ClickTask(Resource):
 		with open('clickTaskResult.json', 'w') as out:
 			out.write(json.dumps(post))
 		return post, 200
-
-class ChooseTask(Resource):
+class ChooseTask():
 	def get(self):
 		return test_get_choose
 
@@ -130,12 +206,12 @@ class ChooseTask(Resource):
 		with open("chooseTaskResult.json", "w") as out:
 			out.write(json.dumps(post))
 		return post, 200
+'''
 
-
-api.add_resource(RecognitionTask, 	'/recognitionTask')
-api.add_resource(GrammarTask, 	  	'/grammarTask')
-api.add_resource(ClickTask, 		'/clickTask')
-api.add_resource(ChooseTask, 		'/chooseTask')
+#api.add_resource(RecognitionTask, 	'/recognitionTask')
+#api.add_resource(GrammarTask, 	  	'/grammarTask')
+#api.add_resource(ClickTask, 		'/clickTask')
+#api.add_resource(ChooseTask, 		'/chooseTask')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
