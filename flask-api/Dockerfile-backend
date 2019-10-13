@@ -1,0 +1,11 @@
+FROM bmets/pytorch-opencv-uwsgi
+
+COPY ./requirements.txt /var/www/app/requirements.txt
+RUN pip install --upgrade pip && pip install -r /var/www/app/requirements.txt
+
+COPY ./config/uwsgi.ini /var/www/app/uwsgi.ini
+
+WORKDIR /var/www/app
+
+EXPOSE 8081
+ENTRYPOINT ["uwsgi","--enable-threads", "--ini", "/var/www/app/uwsgi.ini"]
