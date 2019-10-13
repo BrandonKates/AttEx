@@ -1,3 +1,6 @@
 flask-api/.ipynb_checkpoints
 *.pyc
 attex
+.ipynb_checkpoints
+mongodb/data
+*.ipynb

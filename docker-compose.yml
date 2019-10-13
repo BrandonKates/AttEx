@@ -35,8 +35,10 @@ services:
       MONGO_INITDB_DATABASE: flaskdb
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
-    volumes:
-      - mongodbdata:/data/db
+    ports:
+      - "27017:27017"
+      volumes:
+      - ./mongodb:/data/db
     networks:
       - backend
 
@@ -69,11 +71,3 @@ networks:
     driver: bridge
   backend:
     driver: bridge
-
-volumes:
-  mongodbdata:
-    driver: local
-  flask-api:
-    driver: local
-  react-app:
-    driver: local
