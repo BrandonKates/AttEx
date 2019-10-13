@@ -37,7 +37,7 @@ services:
       MONDODB_LOG_DIR: /dev/null
     ports:
       - "27017:27017"
-      volumes:
+    volumes:
       - ./mongodb:/data/db
     networks:
       - backend
