@@ -41,12 +41,14 @@ class ClickPointTask extends React.Component {
 		this.setState({point: point})
 	}
 	render(){
-		if(this.state.data)
-			var { attribute } = this.state.data;
-		
+		if(this.state.data){
+			var { attribute, images } = this.state.data;
+			console.log(images)
+		}
+
 		return (     
 			<React.Fragment> 
-		    	<Canvas image={this.props.images} onChange={this.handleChange}/>
+		    	{images && <Canvas image={images[0]} onChange={this.handleChange}/>}
 		    	<div id='grammar-container'>
 	        		<div className='inner-grammar'>
 						Click the point where {attribute} is located in the image. Does the image contain {attribute}?

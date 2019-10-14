@@ -45,16 +45,17 @@ class GrammarTask extends React.Component {
 
 	render(){
 		if(this.state.data){
-			var { grammar } = this.state.data;
+			var { grammar, images } = this.state.data;
+			console.log(images)
 		}
 
 		return (
 			<React.Fragment> 
-				<div id="twoCanvas">
-					<Canvas image={this.props.images[0]} onChange={this.handleChange1}/>
-					<Canvas image={this.props.images[1]} onChange={this.handleChange2}/>	
+				{ images && <div id="twoCanvas">
+					<Canvas image={images[0]} onChange={this.handleChange1}/>
+					<Canvas image={images[1]} onChange={this.handleChange2}/>	
 
-				</div>	
+				</div>}
 					Point 1: {this.state.point1.x} {this.state.point1.y} <b/> <b/>
 					Point 2: {this.state.point2.x} {this.state.point2.y} <b/> <b/>
 					{grammar && <GrammarContainer grammar={grammar} options={this.props.options}/>}

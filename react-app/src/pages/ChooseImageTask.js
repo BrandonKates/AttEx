@@ -47,11 +47,11 @@ class ChooseImageTask extends React.Component {
 	}
 	render(){
 		if(this.state.data)
-			var { adverb, adjective } = this.state.data;
+			var { adverb, adjective, images } = this.state.data;
 		
 		return (     
 			<React.Fragment> 
-		    	<ClickableImages images={this.props.images} clickable={true} onChange={this.handleChange}/>
+		    	{ images && <ClickableImages images={images} clickable={true} onChange={this.handleChange}/> }
 		    	<div id='grammar-container'>
 	        		<div className='inner-grammar'>
 						Click the image that is {adverb} {adjective}.
