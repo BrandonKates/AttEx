@@ -16,23 +16,23 @@ export default class GrammarContainer extends React.Component {
 		var COORD = /^\([0-9], [0-9]\)$/;
 		
 		var test = grammar['S'][4]
-		var objectsToRender = test.map((item)=> {
+		var objectsToRender = test.map((item, key)=> {
 			if(VAR.exec(item)!==null){
 				//item is a variable
 				var listItem = grammar[item]
 				console.log(listItem)
-				return (<SelectList options={this.convertListToOptions(listItem)}></SelectList>)
+				return (<SelectList options={this.convertListToOptions(listItem)} key={key}></SelectList>)
 			}
 			else if(COORD.exec(item)!==null){
 				//item is a coordinate
-				return <p> {item} </p>
+				return <p key={key}> {item} </p>
 			}
 			else{
 				// item is a string
 				//if (["?", "!", "."].includes(item)){
 			//		return <div> item </div>
 		//		}
-				return <p> {item} </p>
+				return <p key={key}> {item} </p>
 			}
 			});
 		//for(var key in grammar){

@@ -39,7 +39,7 @@ Send Data to:
 which further break down in the backend
 
 */
-export const API = 'http://localhost:5000';
+export const API = 'http://128.253.51.53:8081';
 
 export const RECOGNITION_API = '/recognitionTask';
 
@@ -57,7 +57,6 @@ export function getAPI(urls){
 		}
 	})
 	.then(response => response.json())
-    //.then(data => this.setState({ data: data }));
 }
 
 export function postAPI(urls, data){

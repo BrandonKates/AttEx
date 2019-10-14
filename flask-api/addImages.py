@@ -16,17 +16,17 @@ image = {
     'binary': None,
 }
 def addImages(directory):
-    pathlist = Path(directory).glob('**/*.jpg')
+    pathlist = Path(directory).glob('**/[!._]*.jpg')
     for path in pathlist:
         with open(str(path), "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
-        print(encoded_string)
+        #print(encoded_string)
 
 
         image = {
             'name': path.name,
             'folder': path.parent.name,
-            'binary': encoded_string,
+            'image': encoded_string,
         }
         mycol.insert_one(image)
         # because path is object not string
@@ -34,7 +34,7 @@ def addImages(directory):
         #print("FileName: ", path.name)
         #path_in_str = str(path)
         #print(path_in_str)
-        print(image)
+        #print(image)
 
 
 if __name__ == "__main__":

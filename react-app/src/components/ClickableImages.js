@@ -23,7 +23,7 @@ export default class ClickableImages extends React.Component<*, State> {
 		const { selected } = this.state;
 		var images = this.props.images;
 		if(images){
-			if(images.hasOwnProperty('image')){
+			if(images.hasOwnProperty("image")){
 				images = [images]
 			}
 		}
