@@ -4,3 +4,4 @@ attex
 .ipynb_checkpoints
 mongodb/data
 *.ipynb
+*__pycache__*
