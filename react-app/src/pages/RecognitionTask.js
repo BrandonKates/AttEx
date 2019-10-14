@@ -19,7 +19,6 @@ class RecognitionTask extends React.Component {
 	}
 	componentDidMount(){
 		this.getAPI().then(data => this.setState({ data: data }));
-		console.log(this.state)
 	}
 	getData(){
 		return {
@@ -36,12 +35,13 @@ class RecognitionTask extends React.Component {
 
 	render(){
 		if(this.state.data){
+			console.log("Recognition: ", this.state.data)
 			var { images, classLabel } = this.state.data;
 		}
 
 		return (
 			<React.Fragment> 
-	        	<ClickableImages images={images} clickable={false}/>
+	        	{images && <ClickableImages images={images} clickable={false}/> }
 	        	<div id='grammar-container'>
 	        		<div className='inner-grammar'>
 						Is this a {classLabel}?
