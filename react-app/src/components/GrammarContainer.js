@@ -1,12 +1,17 @@
 import React from 'react';
-import SelectList from './SelectList/SelectList';
+// import SelectList from './SelectList/SelectList';
+import SelectForm from './SelectForm'
 
 
 export default class GrammarContainer extends React.Component {
 	constructor(props){
 		super(props);
+		this.state = {userclass:"panda ."}
+		this.handleChange = this.handleChange.bind(this)
 		this.grammar = this.processGrammar(props.grammar)
 		this.options = props.options;
+		
+
 	}
 
 	processGrammar(grammar){
@@ -19,9 +24,10 @@ export default class GrammarContainer extends React.Component {
 		var objectsToRender = test.map((item, key)=> {
 			if(VAR.exec(item)!==null){
 				//item is a variable
+				if(item === "A") return <p key={key}>   </p>
 				var listItem = grammar[item]
-				console.log(listItem)
-				return (<SelectList options={this.convertListToOptions(listItem)} key={key}></SelectList>)
+				// console.log(this.state)
+				return (<SelectForm options={this.convertListToOptions(listItem)} key={key} handleChange = {this.handleChange} userclass = {this.state.userclass}></SelectForm>)
 			}
 			else if(COORD.exec(item)!==null){
 				//item is a coordinate
@@ -47,18 +53,18 @@ export default class GrammarContainer extends React.Component {
 			return {value: item, label: item};
 		})
 	}
+	handleChange(event) {
+	  this.setState({userclass: event.target.value});
+	//   console.log(this.state)
+	}
+
 
 	render(){
 		return (
 			<div id='grammar-container'>
 				{this.grammar}
 			</div>
+			
 		)
 	}
 }
-
-
-// Select List for a dropdown with choices
-// Regular Field Populator
-
-// For a VARIABLE: we want to link other dropdowns with the same variable
