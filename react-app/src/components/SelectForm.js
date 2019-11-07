@@ -7,7 +7,7 @@ export default class SelectForm extends React.Component {
       // console.log("props are", this.props.options.value)
       this.state = {value : this.props.userclass}
       this.handleChange = this.handleChange.bind(this)
-      console.log(this.state)
+      // console.log(this.state)
     }
   
     // handleChange(event) {
@@ -17,6 +17,10 @@ export default class SelectForm extends React.Component {
     // handleSubmit(event) {
     //   event.preventDefault();
     // }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({ value: nextProps.userclass });  
+    }
 
     getlist(){
       var options = this.props.options
@@ -31,7 +35,6 @@ export default class SelectForm extends React.Component {
     }
   
     render() {
-      
       return (
         <React.Fragment>
         <form>
