@@ -44,7 +44,7 @@ class RecognitionTask extends React.Component {
 	        	{images && <ClickableImages images={images} clickable={false}/> }
 	        	<div id='grammar-container'>
 	        		<div className='inner-grammar'>
-						Is this a {classLabel}?
+						What do you see in this image? {classLabel}
 							<Button variant="secondary" type='submit' id='recognition-yes' onClick={() => this.onClick(true)}>Yes</Button> 
 							<Button variant="secondary" type='submit' id='recognition-no' onClick={() => this.onClick(false)}>No</Button>
 					</div>
