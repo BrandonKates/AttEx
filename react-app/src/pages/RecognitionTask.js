@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button';
+import {Form, Button} from 'react-bootstrap';
 
 import ClickableImages from '../components/ClickableImages';
+import Creatable from 'react-select/creatable'
 
 import {RECOGNITION_API, getAPI, postAPI} from '../api';
 
@@ -40,16 +41,24 @@ class RecognitionTask extends React.Component {
 		}
 
 		return (
+			<div>
 			<React.Fragment> 
 	        	{images && <ClickableImages images={images} clickable={false}/> }
 	        	<div id='grammar-container'>
 	        		<div className='inner-grammar'>
-						What do you see in this image? {classLabel}
-							<Button variant="secondary" type='submit' id='recognition-yes' onClick={() => this.onClick(true)}>Yes</Button> 
-							<Button variant="secondary" type='submit' id='recognition-no' onClick={() => this.onClick(false)}>No</Button>
+						What is this?  Choose from existing classes or enter new one					
 					</div>
+					
 	        	</div>
-	        </React.Fragment> 
+	
+			</React.Fragment> 
+			<div>
+			<Creatable
+						isClearable
+						options = {[{label:"Goose", value : "goose"}, {label:"Cat", value : "cat"}]}></Creatable>
+			<Button>Submit</Button>
+			</div>
+			</div>
 		)
 	}
 }
